@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAN Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200..800&family=Poiret+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+         
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-blur: blur(12px);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --accent: #60a5fa;
+            --bg-color: #0f172a;
+            --modal-bg: rgba(15, 23, 42, 0.8);
+            --danger: #ef4444;
+            --success: #22c55e;
+            --card-hover-bg: rgba(255, 255, 255, 0.15);
+            --input-bg: rgba(0, 0, 0, 0.2);
+        }
+        :root {
+    --font-family: "Bricolage Grotesque", sans-serif;
+    --clock-font: "Poiret One", cursive;
+    --date-font: "Bricolage Grotesque", sans-serif;
+}
+
+        /* Themes */
+        [data-theme="dark"] {
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --bg-color: #0f172a;
+            --modal-bg: rgba(15, 23, 42, 0.9);
+            --input-bg: rgba(0, 0, 0, 0.3);
+            --card-hover-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="light"] {
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-color: #f1f5f9;
+            --modal-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: rgba(0, 0, 0, 0.05);
+            --accent: #3b82f6;
+            --card-hover-bg: rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="nord"] {
+            --glass-bg: rgba(46, 52, 64, 0.8);
+            --glass-border: rgba(216, 222, 233, 0.1);
+            --text-main: #ECEFF4;
+            --text-muted: #D8DEE9;
+            --bg-color: #2E3440;
+            --accent: #88C0D0;
+            --modal-bg: rgba(46, 52, 64, 0.95);
+            --input-bg: rgba(0, 0, 0, 0.2);
+            --card-hover-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="tokyo-night"] {
+            --glass-bg: rgba(26, 27, 38, 0.8);
+            --glass-border: rgba(169, 177, 214, 0.1);
+            --text-main: #a9b1d6;
+            --text-muted: #565f89;
+            --bg-color: #1a1b26;
+            --accent: #7aa2f7;
+            --modal-bg: rgba(26, 27, 38, 0.95);
+            --input-bg: rgba(0, 0, 0, 0.2);
+            --card-hover-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="catppuccin"] {
+            --glass-bg: rgba(30, 30, 46, 0.8);
+            --glass-border: rgba(205, 214, 244, 0.1);
+            --text-main: #cdd6f4;
+            --text-muted: #a6adc8;
+            --bg-color: #1e1e2e;
+            --accent: #89b4fa;
+            --modal-bg: rgba(30, 30, 46, 0.95);
+            --input-bg: rgba(17, 17, 27, 0.5);
+            --card-hover-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Background */
+        .bg-layer {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            background-color: var(--bg-color);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.9;
+        }
+
+        /* Container & Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-top: 2rem;
+        }
+
+        .top-actions {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: var(--glass-blur);
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--card-hover-bg);
+            transform: translateY(-2px);
+        }
+
+.clock {
+    font-family: var(--clock-font);
+    font-size: clamp(5rem, 10vw, 8rem);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 6px 24px rgba(0,0,0,.35);
+    user-select: none;
+}
+
+        .date {
+    font-family: var(--date-font);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+      .greeting {
+    font-family: var(--date-font);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+        .search-container {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            background: var(--glass-bg);
+            color: var(--text-main);
+            backdrop-filter: var(--glass-blur);
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3), 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Grid */
+        .bookmarks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .bookmark-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: var(--glass-blur);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .bookmark-card:hover {
+            transform: translateY(-5px);
+            background: var(--card-hover-bg);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--input-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-url {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-status {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+        
+        .status-online { background: var(--success); box-shadow: 0 0 10px var(--success); }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .card-stats {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .card-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .card-control-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.2rem;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+
+        .card-control-btn:hover {
+            color: var(--text-main);
+            background: var(--input-bg);
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--modal-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-border);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .hidden { display: none !important; }
+        
+        /* Command Palette */
+        #cmd-palette .modal {
+            position: absolute;
+            top: 20%;
+            max-width: 600px;
+        }
+
+        .cmd-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .cmd-item {
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cmd-item:hover, .cmd-item.selected {
+            background: var(--card-hover-bg);
+        }
+
+        @media (max-width: 768px) {
+            .clock { font-size: 3.5rem; }
+            .container { padding: 1rem; }
+            .modal { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer" id="bg-layer"></div>
+
+    <div class="container">
+        <header>
+            <div class="top-actions">
+                <button class="icon-btn" id="btn-add" title="Add Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+                <button class="icon-btn" id="btn-settings" title="Settings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+            
+            <div class="clock" id="clock">00:00</div>
+            <div class="date" id="date">MONDAY, JANUARY 1</div>
+            <div class="greeting" id="greeting">Good Morning</div>
+            
+            <div class="search-container">
+                <input type="text" class="search-bar" id="search-input" placeholder="Search apps, or press Enter to search Google..." autocomplete="off">
+                <div class="search-hint">Press Enter to search Google directly</div>
+            </div>
+        </header>
+
+        <div class="bookmarks-grid" id="bookmarks-grid">
+            <!-- Dynamic bookmarks inserted here -->
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Setup IP Modal -->
+    <div class="modal-overlay" id="modal-ip">
+        <div class="modal">
+            <h2>Welcome to LAN Dashboard</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.5;">Please enter the current local IP address of your server. This will be used to automatically generate links for your services.</p>
+            <form id="form-ip">
+                <div class="form-group">
+                    <label>Local IP Address</label>
+                    <input type="text" id="input-ip" class="form-control" placeholder="e.g. 192.168.1.100" required pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$|^[a-zA-Z0-9.-]+$">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Save IP & Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="modal-settings">
+        <div class="modal">
+            <h2>Settings</h2>
+            <form id="form-settings">
+                <div class="form-group">
+                    <label>Server IP Address</label>
+                    <input type="text" id="settings-ip" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Theme</label>
+                    <select id="settings-theme" class="form-control">
+                        <option value="glass">Glass (Default)</option>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="nord">Nord</option>
+                        <option value="tokyo-night">Tokyo Night</option>
+                        <option value="catppuccin">Catppuccin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Background Image URL</label>
+                    <input type="text" id="settings-bg-url" class="form-control" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label>Or Upload Background Image</label>
+                    <input type="file" id="settings-bg-file" class="form-control" accept="image/*">
+                </div>
+                <div class="modal-actions" style="justify-content: space-between;">
+                    <div>
+                        <button type="button" class="btn btn-secondary" id="btn-export" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Export JSON</button>
+                        <label class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; cursor: pointer;">
+                            Import JSON
+                            <input type="file" id="btn-import" accept=".json" class="hidden">
+                        </label>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Bookmark Modal -->
+    <div class="modal-overlay" id="modal-bookmark">
+        <div class="modal">
+            <h2 id="bookmark-modal-title">Add Bookmark</h2>
+            <form id="form-bookmark">
+                <input type="hidden" id="bm-id">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="bm-name" class="form-control" required placeholder="e.g. Plex">
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Port (optional)</label>
+                        <input type="number" id="bm-port" class="form-control" placeholder="e.g. 32400">
+                    </div>
+                    <div class="form-group" style="flex: 2;">
+                        <label>Path (optional)</label>
+                        <input type="text" id="bm-path" class="form-control" placeholder="e.g. /web">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Icon (Emoji/Text)</label>
+                    <input type="text" id="bm-icon" class="form-control" placeholder="🎬" required>
+                </div>
+                <div class="form-group">
+                    <label>Override URL (optional, ignores IP/Port)</label>
+                    <input type="text" id="bm-override" class="form-control" placeholder="https://external-service.com">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Bookmark</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Command Palette Modal -->
+    <div class="modal-overlay" id="cmd-palette">
+        <div class="modal">
+            <input type="text" id="cmd-input" class="form-control" placeholder="Search apps..." style="font-size: 1.2rem; padding: 1rem;">
+            <div class="cmd-list" id="cmd-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        const state = {
+            ip: '',
+            theme: 'glass',
+            customBg: '', // stores URL or base64
+            bookmarks: [],
+            stats: {}
+        };
+
+        const defaultBookmarks = [
+            { id: '1', name: 'Proxmox', port: 8006, path: '', icon: '🖥️', https: true },
+            { id: '2', name: 'TrueNAS', port: 80, path: '', icon: '💾' },
+            { id: '3', name: 'Pi-hole', port: 80, path: '/admin', icon: '🛡️' },
+            { id: '4', name: 'Plex', port: 32400, path: '/web', icon: '🍿' },
+            { id: '5', name: 'Home Assistant', port: 8123, path: '', icon: '🏠' },
+            { id: '6', name: 'Portainer', port: 9000, path: '', icon: '🐳' },
+        ];
+
+        // DOM Elements
+        const elClock = document.getElementById('clock');
+        const elDate = document.getElementById('date');
+        const elGreeting = document.getElementById('greeting');
+        const elGrid = document.getElementById('bookmarks-grid');
+        const elSearch = document.getElementById('search-input');
+        const elBgLayer = document.getElementById('bg-layer');
+        
+        // Load State
+        function loadState() {
+            const saved = localStorage.getItem('lan-dash-data');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state.ip = parsed.ip || '';
+                state.theme = parsed.theme || 'glass';
+                state.customBg = parsed.customBg || '';
+                state.bookmarks = parsed.bookmarks && parsed.bookmarks.length > 0 ? parsed.bookmarks : defaultBookmarks;
+                state.stats = parsed.stats || {};
+            } else {
+                state.bookmarks = defaultBookmarks;
+            }
+            applyTheme();
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('lan-dash-data', JSON.stringify(state));
+            } catch (e) {
+                if (e.name === 'QuotaExceededError') {
+                    alert('Error: Background image is too large for local storage. Try using a URL instead.');
+                }
+            }
+        }
+
+        // Clock & Greeting
+        function updateClock() {
+            const now = new Date();
+            elClock.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const options = { weekday: 'long', month: 'long', day: 'numeric' };
+            elDate.textContent = now.toLocaleDateString(undefined, options);
+
+            const hour = now.getHours();
+            if (hour < 12) elGreeting.textContent = "Good Morning";
+            else if (hour < 18) elGreeting.textContent = "Good Afternoon";
+            else elGreeting.textContent = "Good Evening";
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Theme & Background
+        function applyTheme() {
+            document.body.setAttribute('data-theme', state.theme);
+            if (state.customBg) {
+                elBgLayer.style.backgroundImage = `url('${state.customBg}')`;
+            } else {
+                elBgLayer.style.backgroundImage = 'none';
+            }
+        }
+
+        // URL Generation
+        function generateUrl(bm) {
+            if (bm.override) return bm.override;
+            if (!state.ip) return '#';
+            const protocol = bm.https ? 'https://' : 'http://';
+            const portStr = bm.port ? `:${bm.port}` : '';
+            const pathStr = bm.path ? (bm.path.startsWith('/') ? bm.path : `/${bm.path}`) : '';
+            return `${protocol}${state.ip}${portStr}${pathStr}`;
+        }
+
+        // Render Bookmarks
+        function renderBookmarks(searchQuery = '') {
+            elGrid.innerHTML = '';
+            
+            let filtered = state.bookmarks;
+            
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(b => b.name.toLowerCase().includes(q));
+            }
+
+            // Sort by clicks
+            filtered.sort((a, b) => {
+                const clicksA = state.stats[a.id]?.clicks || 0;
+                const clicksB = state.stats[b.id]?.clicks || 0;
+                return clicksB - clicksA;
+            });
+
+            filtered.forEach(bm => {
+                const url = generateUrl(bm);
+                const displayUrl = bm.override ? bm.override : `${state.ip}${bm.port ? ':'+bm.port : ''}${bm.path}`;
+                
+                const card = document.createElement('a');
+                card.className = 'bookmark-card';
+                card.href = url;
+                card.target = '_blank';
+                card.onclick = (e) => handleBookmarkClick(e, bm.id);
+                
+                const stat = state.stats[bm.id];
+                const lastOpened = stat && stat.lastOpened ? new Date(stat.lastOpened).toLocaleDateString() : 'Never';
+
+                card.innerHTML = `
+                    <div class="card-status" id="status-${bm.id}"></div>
+                    <div class="card-header">
+                        <div class="card-icon">${bm.icon}</div>
+                        <div class="card-info">
+                            <div class="card-title">${bm.name}</div>
+                            <div class="card-url" title="${url}">${displayUrl}</div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <span class="card-stats">Clicks: ${stat ? stat.clicks : 0} • Last: ${lastOpened}</span>
+                        <div class="card-controls" onclick="event.preventDefault(); event.stopPropagation();">
+                            <button class="card-control-btn" onclick="editBookmark('${bm.id}')" title="Edit">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="card-control-btn" onclick="deleteBookmark('${bm.id}')" title="Delete">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                elGrid.appendChild(card);
+                
+                if (!bm.override && state.ip) {
+                    checkStatus(bm, `status-${bm.id}`);
+                }
+            });
+        }
+
+        function checkStatus(bm, elementId) {
+            const img = new Image();
+            const proto = bm.https ? 'https' : 'http';
+            const port = bm.port ? `:${bm.port}` : '';
+            img.src = `${proto}://${state.ip}${port}/favicon.ico?_=${new Date().getTime()}`;
+            img.onload = () => {
+                const el = document.getElementById(elementId);
+                if(el) el.classList.add('status-online');
+            };
+        }
+
+        function handleBookmarkClick(e, id) {
+            if (!state.stats[id]) {
+                state.stats[id] = { clicks: 0, lastOpened: null };
+            }
+            state.stats[id].clicks++;
+            state.stats[id].lastOpened = Date.now();
+            saveState();
+            setTimeout(() => renderBookmarks(elSearch.value), 100);
+        }
+
+        // Search & Google search
+        elSearch.addEventListener('input', (e) => {
+            renderBookmarks(e.target.value);
+        });
+
+        elSearch.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const query = e.target.value.trim();
+                if (query) {
+                    window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+                }
+            }
+        });
+
+        // Modals
+        function openModal(id) {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+        }
+
+        // Setup IP
+        document.getElementById('form-ip').addEventListener('submit', (e) => {
+            e.preventDefault();
+            state.ip = document.getElementById('input-ip').value.trim();
+            saveState();
+            closeModals();
+            renderBookmarks();
+        });
+
+        // Settings
+        document.getElementById('btn-settings').addEventListener('click', () => {
+            document.getElementById('settings-ip').value = state.ip;
+            document.getElementById('settings-theme').value = state.theme;
+            document.getElementById('settings-bg-url').value = state.customBg.startsWith('data:') ? '' : state.customBg;
+            document.getElementById('settings-bg-file').value = '';
+            openModal('modal-settings');
+        });
+
+        document.getElementById('settings-bg-file').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    document.getElementById('settings-bg-url').value = ''; // clear URL input if file is selected
+                    state.customBg = ev.target.result; 
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('form-settings').addEventListener('submit', (e) => {
+            e.preventDefault();
+            state.ip = document.getElementById('settings-ip').value.trim();
+            state.theme = document.getElementById('settings-theme').value;
+            
+            const urlInput = document.getElementById('settings-bg-url').value.trim();
+            if (urlInput) {
+                state.customBg = urlInput;
+            }
+            
+            saveState();
+            applyTheme();
+            renderBookmarks();
+            closeModals();
+        });
+
+        // Add / Edit Bookmark
+        document.getElementById('btn-add').addEventListener('click', () => {
+            document.getElementById('form-bookmark').reset();
+            document.getElementById('bm-id').value = '';
+            document.getElementById('bookmark-modal-title').textContent = 'Add Bookmark';
+            openModal('modal-bookmark');
+        });
+
+        window.editBookmark = function(id) {
+            const bm = state.bookmarks.find(b => b.id === id);
+            if (!bm) return;
+            
+            document.getElementById('bm-id').value = bm.id;
+            document.getElementById('bm-name').value = bm.name;
+            document.getElementById('bm-port').value = bm.port || '';
+            document.getElementById('bm-path').value = bm.path || '';
+            document.getElementById('bm-icon').value = bm.icon || '';
+            document.getElementById('bm-override').value = bm.override || '';
+            
+            document.getElementById('bookmark-modal-title').textContent = 'Edit Bookmark';
+            openModal('modal-bookmark');
+        };
+
+        window.deleteBookmark = function(id) {
+            if(confirm('Are you sure you want to delete this bookmark?')) {
+                state.bookmarks = state.bookmarks.filter(b => b.id !== id);
+                delete state.stats[id];
+                saveState();
+                renderBookmarks(elSearch.value);
+            }
+        };
+
+        document.getElementById('form-bookmark').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const id = document.getElementById('bm-id').value || Date.now().toString();
+            const bm = {
+                id,
+                name: document.getElementById('bm-name').value.trim(),
+                port: document.getElementById('bm-port').value,
+                path: document.getElementById('bm-path').value.trim(),
+                icon: document.getElementById('bm-icon').value.trim(),
+                override: document.getElementById('bm-override').value.trim()
+            };
+
+            const existingIndex = state.bookmarks.findIndex(b => b.id === id);
+            if (existingIndex >= 0) {
+                state.bookmarks[existingIndex] = bm;
+            } else {
+                state.bookmarks.push(bm);
+            }
+
+            saveState();
+            renderBookmarks(elSearch.value);
+            closeModals();
+        });
+
+        // Import / Export
+        document.getElementById('btn-export').addEventListener('click', () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "lan-dash-backup.json");
+            dlAnchorElem.click();
+        });
+
+        document.getElementById('btn-import').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if(imported && Array.isArray(imported.bookmarks)) {
+                        Object.assign(state, imported);
+                        saveState();
+                        applyTheme();
+                        renderBookmarks(elSearch.value);
+                        closeModals();
+                        alert('Settings imported successfully!');
+                    } else {
+                        alert('Invalid backup file format.');
+                    }
+                } catch(err) {
+                    alert('Error parsing JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // Command Palette (Ctrl+K)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                openCommandPalette();
+            }
+            if (e.key === 'Escape') {
+                closeModals();
+            }
+        });
+
+        function openCommandPalette() {
+            openModal('cmd-palette');
+            const input = document.getElementById('cmd-input');
+            input.value = '';
+            input.focus();
+            renderCommandList('');
+        }
+
+        document.getElementById('cmd-input').addEventListener('input', (e) => {
+            renderCommandList(e.target.value);
+        });
+
+        function renderCommandList(query) {
+            const list = document.getElementById('cmd-list');
+            list.innerHTML = '';
+            
+            let filtered = state.bookmarks;
+            if (query) {
+                const q = query.toLowerCase();
+                filtered = filtered.filter(b => b.name.toLowerCase().includes(q));
+            }
+
+            filtered.slice(0, 10).forEach((bm, idx) => {
+                const div = document.createElement('div');
+                div.className = `cmd-item ${idx === 0 ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <div class="card-icon" style="width: 32px; height: 32px; font-size: 1rem;">${bm.icon}</div>
+                    <div style="flex:1;">
+                        <div style="font-weight: 500;">${bm.name}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">${generateUrl(bm)}</div>
+                    </div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Enter to open</span>
+                `;
+                
+                div.onclick = () => {
+                    handleBookmarkClick(null, bm.id);
+                    window.open(generateUrl(bm), '_blank');
+                    closeModals();
+                };
+                
+                list.appendChild(div);
+            });
+        }
+
+        document.getElementById('cmd-input').addEventListener('keydown', (e) => {
+            const list = document.getElementById('cmd-list');
+            const items = list.querySelectorAll('.cmd-item');
+            if (items.length === 0) return;
+
+            let selected = Array.from(items).findIndex(item => item.classList.contains('selected'));
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (selected >= 0) items[selected].classList.remove('selected');
+                selected = (selected + 1) % items.length;
+                items[selected].classList.add('selected');
+                items[selected].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (selected >= 0) items[selected].classList.remove('selected');
+                selected = (selected - 1 + items.length) % items.length;
+                items[selected].classList.add('selected');
+                items[selected].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (selected >= 0) {
+                    items[selected].click();
+                }
+            }
+        });
+
+        // Click outside to close modals
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeModals();
+                }
+            });
+        });
+
+        // Initialize
+        loadState();
+        if (!state.ip) {
+            openModal('modal-ip');
+        } else {
+            renderBookmarks();
+        }
+    </script>
+</body>
+</html>
