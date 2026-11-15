@@ -3,1053 +3,1585 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAN Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200..800&family=Poiret+One&display=swap" rel="stylesheet">
+    <title>start</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
         :root {
-         
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-blur: blur(12px);
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
-            --accent: #60a5fa;
-            --bg-color: #0f172a;
-            --modal-bg: rgba(15, 23, 42, 0.8);
-            --danger: #ef4444;
-            --success: #22c55e;
-            --card-hover-bg: rgba(255, 255, 255, 0.15);
-            --input-bg: rgba(0, 0, 0, 0.2);
-        }
-        :root {
-    --font-family: "Bricolage Grotesque", sans-serif;
-    --clock-font: "Poiret One", cursive;
-    --date-font: "Bricolage Grotesque", sans-serif;
-}
-
-        /* Themes */
-        [data-theme="dark"] {
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #cbd5e1;
-            --bg-color: #0f172a;
-            --modal-bg: rgba(15, 23, 42, 0.9);
-            --input-bg: rgba(0, 0, 0, 0.3);
-            --card-hover-bg: rgba(255, 255, 255, 0.05);
+            --bg: #F5F5F7;
+            --surface: #FFFFFF;
+            --surface-hover: #F9FAFB;
+            --text-main: #1D1D1F;
+            --text-muted: #86868B;
+            --border: #E5E5EA;
+            --accent: #0071E3;
+            --accent-hover: #005BB5;
+            --danger: #FF3B30;
+            --radius: 24px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        [data-theme="light"] {
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.1);
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --bg-color: #f1f5f9;
-            --modal-bg: rgba(255, 255, 255, 0.9);
-            --input-bg: rgba(0, 0, 0, 0.05);
-            --accent: #3b82f6;
-            --card-hover-bg: rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="nord"] {
-            --glass-bg: rgba(46, 52, 64, 0.8);
-            --glass-border: rgba(216, 222, 233, 0.1);
-            --text-main: #ECEFF4;
-            --text-muted: #D8DEE9;
-            --bg-color: #2E3440;
-            --accent: #88C0D0;
-            --modal-bg: rgba(46, 52, 64, 0.95);
-            --input-bg: rgba(0, 0, 0, 0.2);
-            --card-hover-bg: rgba(255, 255, 255, 0.05);
-        }
-
-        [data-theme="tokyo-night"] {
-            --glass-bg: rgba(26, 27, 38, 0.8);
-            --glass-border: rgba(169, 177, 214, 0.1);
-            --text-main: #a9b1d6;
-            --text-muted: #565f89;
-            --bg-color: #1a1b26;
-            --accent: #7aa2f7;
-            --modal-bg: rgba(26, 27, 38, 0.95);
-            --input-bg: rgba(0, 0, 0, 0.2);
-            --card-hover-bg: rgba(255, 255, 255, 0.05);
-        }
-
-        [data-theme="catppuccin"] {
-            --glass-bg: rgba(30, 30, 46, 0.8);
-            --glass-border: rgba(205, 214, 244, 0.1);
-            --text-main: #cdd6f4;
-            --text-muted: #a6adc8;
-            --bg-color: #1e1e2e;
-            --accent: #89b4fa;
-            --modal-bg: rgba(30, 30, 46, 0.95);
-            --input-bg: rgba(17, 17, 27, 0.5);
-            --card-hover-bg: rgba(255, 255, 255, 0.05);
-        }
-
+        /* FIXED: Changed from '- {' to '* {' */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-family);
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Inter', system-ui, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             color: var(--text-main);
             min-height: 100vh;
-            overflow-x: hidden;
             display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        /* Background */
-        .bg-layer {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: -1;
-            background-color: var(--bg-color);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.9;
-        }
-
-        /* Container & Layout */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            justify-content: center;
+            align-items: center;
             padding: 2rem;
-            width: 100%;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-            padding-top: 2rem;
+        svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
         }
 
-        .top-actions {
-            position: absolute;
-            top: 0;
-            right: 0;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .icon-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            backdrop-filter: var(--glass-blur);
-            transition: all 0.2s ease;
-        }
-
-        .icon-btn:hover {
-            background: var(--card-hover-bg);
-            transform: translateY(-2px);
-        }
-
-.clock {
-    font-family: var(--clock-font);
-    font-size: clamp(5rem, 10vw, 8rem);
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-    text-shadow: 0 6px 24px rgba(0,0,0,.35);
-    user-select: none;
-}
-
-        .date {
-    font-family: var(--date-font);
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-      .greeting {
-    font-family: var(--date-font);
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-        .search-container {
-            max-width: 600px;
-            margin: 2rem auto 0;
-            position: relative;
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            font-size: 1.1rem;
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            background: var(--glass-bg);
-            color: var(--text-main);
-            backdrop-filter: var(--glass-blur);
-            outline: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-bar:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3), 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-bar::placeholder {
-            color: var(--text-muted);
-        }
-
-        .search-hint {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-        }
-
-        /* Grid */
-        .bookmarks-grid {
+        /* Bento Grid Layout */
+        .bento-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
-        .bookmark-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            backdrop-filter: var(--glass-blur);
+        .bento {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
             display: flex;
             flex-direction: column;
-            text-decoration: none;
-            color: var(--text-main);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            cursor: pointer;
         }
 
-        .bookmark-card:hover {
-            transform: translateY(-5px);
-            background: var(--card-hover-bg);
-            border-color: rgba(255,255,255,0.3);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        .bento:hover {
+            box-shadow: var(--shadow-hover);
         }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
+        /* Specific Grid Placements */
+        .hero { grid-column: span 2; grid-row: span 2; align-items: center; justify-content: center; padding: 40px; }
+        .bookmarks { grid-column: span 1; grid-row: span 2; max-height: 480px; }
+        .rss { grid-column: span 1; grid-row: span 2; max-height: 480px; }
+        .scratchpad { grid-column: span 2; grid-row: span 1; min-height: 180px; }
+        .tools { grid-column: span 2; grid-row: span 1; min-height: 180px; }
+        .quick-launch { grid-column: span 4; }
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: var(--input-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .card-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .card-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.2rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-url {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-status {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--text-muted);
-        }
+        /* Hero / Clock / Search */
+        .clock-container { text-align: center; margin-bottom: 30px; }
+        .clock { font-size: 5rem; font-weight: 300; letter-spacing: -0.05em; line-height: 1; margin-bottom: 8px; color: var(--text-main); }
+        .date { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
         
-        .status-online { background: var(--success); box-shadow: 0 0 10px var(--success); }
-
-        .card-actions {
+        .search-box {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid var(--glass-border);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0 16px;
+            transition: var(--transition);
         }
-
-        .card-stats {
+        .search-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        .search-box svg { color: var(--text-muted); margin-right: 12px; }
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 18px 0;
+            font-size: 1rem;
+            color: var(--text-main);
+            outline: none;
+        }
+        .search-box input::placeholder { color: var(--text-muted); }
+        
+        .bangs-help {
+            margin-top: 16px;
+            display: flex;
+            gap: 16px;
             font-size: 0.75rem;
             color: var(--text-muted);
         }
-
-        .card-controls {
-            display: flex;
-            gap: 0.5rem;
+        .bangs-help kbd {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-family: monospace;
+            color: var(--text-main);
         }
 
-        .card-control-btn {
-            background: none;
+        /* Generic Bento Components */
+        .bento-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .bento-header .title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .bento-header .title svg { color: var(--text-muted); }
+        .icon-btn {
+            background: transparent;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            padding: 0.2rem;
-            border-radius: 4px;
-            transition: color 0.2s;
+            padding: 4px;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: grid;
+            place-items: center;
         }
+        .icon-btn:hover { background: var(--bg); color: var(--text-main); }
+        
+        .scrollable {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 4px;
+        }
+        .scrollable::-webkit-scrollbar { width: 4px; }
+        .scrollable::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-        .card-control-btn:hover {
+        /* List Items (Bookmarks & RSS) */
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            background: transparent;
+            transition: var(--transition);
+            position: relative;
+        }
+        .list-item:hover { background: var(--surface-hover); }
+        .list-item .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+            color: var(--text-muted);
+        }
+        .list-item-content { flex: 1; min-width: 0; }
+        .list-item-title { font-size: 0.85rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+        .list-item-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+        
+        .delete-btn {
+            opacity: 0;
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: var(--transition);
+            position: absolute;
+            right: 8px;
+        }
+        .list-item:hover .delete-btn { opacity: 1; }
+        .delete-btn:hover { background: #FF3B3015; }
+
+        /* Quick Launch App Grid */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 12px;
+            border-radius: 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            text-decoration: none;
             color: var(--text-main);
-            background: var(--input-bg);
+            transition: var(--transition);
+            position: relative;
+        }
+        .app-item:hover {
+            background: var(--surface-hover);
+            transform: translateY(-2px);
+            border-color: #D1D1D6;
+        }
+        .app-item img {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+        .app-item span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+        .app-item .delete-btn {
+            top: -8px;
+            right: -8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            padding: 4px;
+            width: 24px;
+            height: 24px;
+            box-shadow: var(--shadow);
+        }
+        .app-item .delete-btn svg {
+            width: 12px;
+            height: 12px;
+            stroke-width: 2.5;
         }
 
-        /* Modals */
-        .modal-overlay {
+        /* Scratchpad */
+        textarea {
+            flex: 1;
+            width: 100%;
+            border: none;
+            resize: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+        .save-status { font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Tools & Status */
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+        .tool-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        .tool-card .label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .tool-card .value { font-size: 1.25rem; font-weight: 500; }
+        
+        .calc-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 0;
+            font-size: 1.1rem;
+            outline: none;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+
+        /* Contribution calendar: real HTML cells, deliberately not SVG */
+        .github-card { grid-column: span 4; }
+        .github-top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+        .github-user { color:var(--text-muted); font-size:.8rem; margin-top:4px; }
+        .github-stats { display:flex; gap:18px; color:var(--text-muted); font-size:.75rem; flex-wrap:wrap; }
+        .github-stats strong { color:var(--text-main); font-weight:600; }
+        .contrib-scroll { overflow-x:auto; padding:14px 2px 6px; }
+        .contrib-grid { display:grid; grid-auto-flow:column; grid-template-rows:repeat(7, 11px); grid-auto-columns:11px; gap:4px; width:max-content; min-width:100%; }
+        .contrib-cell { width:11px; height:11px; border-radius:3px; background:var(--border); position:relative; outline:none; }
+        .contrib-cell[data-level="1"] { background:#b7dfc4; }
+        .contrib-cell[data-level="2"] { background:#68bd85; }
+        .contrib-cell[data-level="3"] { background:#2e9858; }
+        .contrib-cell[data-level="4"] { background:#176b3a; }
+        .contrib-cell:hover { transform:scale(1.2); box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--accent); }
+        .contrib-legend { display:flex; align-items:center; justify-content:flex-end; gap:5px; color:var(--text-muted); font-size:.7rem; margin-top:8px; }
+        .contrib-legend .contrib-cell { display:inline-block; }
+        .github-foot { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:10px; font-size:.75rem; color:var(--text-muted); }
+        .text-link { color:var(--accent); text-decoration:none; }
+        .text-link:hover { text-decoration:underline; }
+        .feed-articles { display:flex; flex-direction:column; gap:5px; margin:4px 0 8px 30px; }
+        .feed-article { color:var(--text-main); text-decoration:none; font-size:.76rem; line-height:1.4; padding:6px 8px; border-radius:8px; background:var(--bg); }
+        .feed-article:hover { color:var(--accent); }
+        .feed-source { font-size:.68rem; color:var(--text-muted); }
+        .network-bars { height:34px; display:flex; align-items:flex-end; gap:3px; margin:10px 0 8px; }
+        .network-bar { flex:1; min-width:2px; border-radius:3px 3px 1px 1px; background:var(--accent); opacity:.8; height:3px; transition:height .25s ease; }
+        .network-details { display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; font-size:.73rem; color:var(--text-muted); }
+        .network-details strong { display:block; font-size:.95rem; font-weight:600; color:var(--text-main); margin-top:2px; }
+        .connectivity-list { display:flex; flex-direction:column; gap:8px; margin-top:12px; }
+        .connectivity-row { display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:.75rem; color:var(--text-muted); }
+        .probe-state { display:flex; align-items:center; gap:6px; }
+        .probe-dot { width:7px; height:7px; border-radius:50%; background:#9ca3af; }
+        .probe-dot.good { background:#2e9858; box-shadow:0 0 7px #2e985855; }
+        .probe-dot.bad { background:#e05252; }
+        .connectivity-actions { display:flex; gap:8px; align-items:center; margin-top:12px; }
+        .small-action { background:transparent; border:1px solid var(--border); border-radius:8px; padding:6px 9px; color:var(--text-muted); cursor:pointer; font-size:.72rem; }
+        .small-action:hover { color:var(--text-main); background:var(--surface); }
+        .tools-grid { grid-template-columns:1.2fr 1fr; }
+        @media (max-width:1024px) { .github-card {grid-column:span 2;} }
+        @media (max-width:768px) { .github-card {grid-column:span 1;} .tools-grid {grid-template-columns:1fr;} }
+
+        /* Modal Overlay */
+        .overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
             display: none;
             align-items: center;
             justify-content: center;
+            z-index: 50;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s ease;
         }
-
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
+        .overlay.active { display: flex; opacity: 1; }
         .modal {
-            background: var(--modal-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .modal-overlay.active .modal {
-            transform: scale(1);
-        }
-
-        .modal h2 {
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .form-control {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 24px;
             width: 100%;
-            padding: 0.75rem 1rem;
-            background: var(--input-bg);
-            border: 1px solid var(--glass-border);
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .modal h3 { margin-bottom: 16px; font-weight: 600; font-size: 1.1rem; }
+        .modal input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            color: var(--text-main);
-            font-size: 1rem;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
             outline: none;
-            transition: border-color 0.2s;
         }
-
-        .form-control:focus {
-            border-color: var(--accent);
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            border: none;
-            font-size: 1rem;
+        .modal input:focus { border-color: var(--accent); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; }
+        .modal-btn {
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary {
-            background: var(--input-bg);
+            border: 1px solid var(--border);
+            background: var(--surface);
             color: var(--text-main);
-            border: 1px solid var(--glass-border);
+            transition: var(--transition);
         }
+        .modal-btn:hover { background: var(--bg); }
+        .modal-btn.primary { background: var(--text-main); color: var(--surface); border-color: var(--text-main); }
+        .modal-btn.primary:hover { background: #000; }
 
-        .btn-secondary:hover {
-            background: var(--glass-border);
+        @media (max-width: 1024px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero, .scratchpad, .tools { grid-column: span 2; }
+            .bookmarks, .rss { grid-column: span 1; }
+            .quick-launch { grid-column: span 2; }
         }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            filter: brightness(1.1);
-        }
-
-        .hidden { display: none !important; }
-        
-        /* Command Palette */
-        #cmd-palette .modal {
-            position: absolute;
-            top: 20%;
-            max-width: 600px;
-        }
-
-        .cmd-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-top: 1rem;
-        }
-
-        .cmd-item {
-            padding: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .cmd-item:hover, .cmd-item.selected {
-            background: var(--card-hover-bg);
-        }
-
         @media (max-width: 768px) {
-            .clock { font-size: 3.5rem; }
-            .container { padding: 1rem; }
-            .modal { padding: 1.5rem; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .hero, .bookmarks, .rss, .scratchpad, .tools, .quick-launch { grid-column: span 1; }
+            .clock { font-size: 4rem; }
+            .apps-grid { grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); }
         }
+
+/* GitHub Radar */
+.github-radar {
+  grid-column: span 2;
+  min-width: 0;
+}
+
+.gh-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.gh-tab {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: .75rem;
+}
+
+.gh-tab:hover,
+.gh-tab.active {
+  color: var(--text-main);
+  background: var(--bg);
+  border-color: var(--accent);
+}
+
+.gh-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.gh-summary > div {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 0;
+}
+
+.gh-summary strong,
+.gh-summary span {
+  display: block;
+}
+
+.gh-summary strong {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.gh-summary span {
+  color: var(--text-muted);
+  font-size: .7rem;
+  margin-top: 4px;
+}
+
+.gh-status {
+  color: var(--text-muted);
+  font-size: .75rem;
+  margin: 10px 0;
+}
+
+.gh-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.gh-item {
+  display: block;
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.gh-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.gh-item-title {
+  font-size: .8rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.gh-item-meta {
+  color: var(--text-muted);
+  font-size: .7rem;
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+.gh-label {
+  display: inline-block;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 6px;
+  margin: 5px 4px 0 0;
+  font-size: .65rem;
+}
+
+@media (max-width: 768px) {
+  .github-radar { grid-column: span 1; }
+}
+
+/* Radio + Discover */
+.radio-card,
+.discover-card {
+  grid-column: span 2;
+  min-width: 0;
+  min-height: 300px;
+}
+
+.radio-now {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.radio-art {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+  color: var(--accent);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -.06em;
+}
+
+.radio-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.radio-info strong {
+  font-size: .9rem;
+  overflow-wrap: anywhere;
+}
+
+.radio-info span,
+.radio-volume span,
+.discover-status,
+.discover-footer {
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+
+.radio-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.radio-play {
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 14px;
+  background: var(--text-main);
+  color: var(--surface);
+  cursor: pointer;
+}
+
+.radio-volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.radio-volume input {
+  width: 85px;
+  accent-color: var(--accent);
+}
+
+.radio-stations {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  max-height: 130px;
+}
+
+.radio-station {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.radio-station-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .78rem;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  color: var(--text-main);
+  text-align: left;
+}
+
+.radio-station button:not(.radio-station-name) {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.radio-add-form {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.radio-add-form[hidden] {
+  display: none;
+}
+
+.radio-add-form input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg);
+  color: var(--text-main);
+}
+
+.radio-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.discover-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.discover-filter {
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: .72rem;
+}
+
+.discover-filter.active {
+  color: var(--text-main);
+  background: var(--bg);
+  border-color: var(--accent);
+}
+
+.discover-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  max-height: 270px;
+}
+
+.discover-item {
+  display: block;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.discover-item:hover {
+  border-color: var(--border);
+  background: var(--bg);
+}
+
+.discover-item strong {
+  display: block;
+  font-size: .8rem;
+  line-height: 1.45;
+}
+
+.discover-item span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: .68rem;
+}
+
+.discover-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.discover-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .radio-card,
+  .discover-card {
+    grid-column: span 1;
+  }
+}
+
+.radio-card,
+.discover-card {
+  grid-column: span 2;
+}
+
+.quick-launch {
+  grid-column: span 4;
+}
+
+@media (max-width: 1024px) {
+  .radio-card,
+  .discover-card,
+  .quick-launch {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .radio-card,
+  .discover-card,
+  .quick-launch {
+    grid-column: span 1;
+  }
+}
+
     </style>
 </head>
 <body>
 
-    <div class="bg-layer" id="bg-layer"></div>
-
-    <div class="container">
-        <header>
-            <div class="top-actions">
-                <button class="icon-btn" id="btn-add" title="Add Bookmark">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </button>
-                <button class="icon-btn" id="btn-settings" title="Settings">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                </button>
+    <div class="bento-grid">
+        
+        <!-- Center Hero / Search -->
+        <div class="bento hero">
+            <div class="clock-container">
+                <div class="clock" id="clock">00:00</div>
+                <div class="date" id="date">Day, Month 00</div>
             </div>
             
-            <div class="clock" id="clock">00:00</div>
-            <div class="date" id="date">MONDAY, JANUARY 1</div>
-            <div class="greeting" id="greeting">Good Morning</div>
+            <form class="search-box" id="search-form">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="search-input" placeholder="Search the web or use a bang (!ai, !g, !yt)..." autocomplete="off" autofocus>
+            </form>
             
-            <div class="search-container">
-                <input type="text" class="search-bar" id="search-input" placeholder="Search apps, or press Enter to search Google..." autocomplete="off">
-                <div class="search-hint">Press Enter to search Google directly</div>
+            <div class="bangs-help">
+                <span><kbd>!ai</kbd> ChatGPT</span>
+                <span><kbd>!g</kbd> Google</span>
+                <span><kbd>!yt</kbd> YouTube</span>
+                <span><kbd>!gh</kbd> GitHub</span>
             </div>
-        </header>
-
-        <div class="bookmarks-grid" id="bookmarks-grid">
-            <!-- Dynamic bookmarks inserted here -->
         </div>
+
+        <!-- Bookmarks -->
+        <div class="bento bookmarks">
+            <div class="bento-header">
+                <div class="title">
+                    <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> 
+                    Bookmarks
+                </div>
+                <button class="icon-btn" onclick="openModal('bookmark')" title="Add Bookmark">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+            <div class="scrollable" id="bookmark-list"></div>
+        </div>
+
+        <!-- RSS Feeds -->
+        <div class="bento rss">
+            <div class="bento-header">
+                <div class="title">
+                    <svg viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+                    RSS Feeds
+                </div>
+                <button class="icon-btn" onclick="openModal('rss')" title="Add Feed">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+            <div class="scrollable" id="rss-list"></div>
+        </div>
+
+
+        <!-- Tools & Network Status -->
+        <div class="bento tools">
+            <div class="bento-header">
+                <div class="title">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    System & Tools
+                </div>
+            </div>
+            
+            <div class="tools-grid">
+                
+                <!-- Local interface traffic + connectivity probes -->
+                <div class="tool-card" id="network-card">
+                    <div class="label" style="justify-content:space-between;width:100%;">
+                        <span style="display:flex;align-items:center;gap:6px;"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg> Live network</span>
+                        <span id="ping-indicator" class="probe-dot" title="Network state"></span>
+                    </div>
+                    <div class="value" id="net-total">Waiting for samples</div>
+                    <div class="network-bars" id="network-bars" aria-label="Recent connection latency history"></div>
+                    <div class="network-details">
+                        <div>Latest latency<strong id="net-down">—</strong></div>
+                        <div>Average latency<strong id="net-up">—</strong></div>
+                        <div>Successful checks<strong id="net-rx-total">0 / 0</strong></div>
+                        <div>Browser status<strong id="net-tx-total">Checking…</strong></div>
+                    </div>
+                    <div class="connectivity-list" id="connectivity-list">
+                        <div class="connectivity-row"><span class="probe-state"><i class="probe-dot"></i> Internet route</span><span>Checking…</span></div>
+                    </div>
+                    <div class="connectivity-actions"><button class="small-action" onclick="refreshConnectivity(true)">Run diagnostics</button><span id="net-interface" class="feed-source">Browser-only · no backend</span></div>
+                </div>
+                
+                <!-- Quick Calculator Card -->
+                <div class="tool-card">
+                    <div class="label">
+                        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16.01" y2="14"></line></svg>
+                        Quick Calculator
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                        <input type="text" class="calc-input" id="calc-input" placeholder="e.g. (12 * 8) / 3" autocomplete="off">
+                        <div class="value" id="calc-result" style="color: var(--text-muted); font-size: 1rem;">= 0</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- GitHub contribution calendar: generated from real data using HTML grid cells -->
+        <section class="bento github-card" aria-label="GitHub contribution activity">
+            <div class="github-top">
+                <div>
+                    <div class="bento-header" style="margin-bottom:4px"><div class="title"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> GitHub activity</div></div>
+                    <div class="github-user" id="github-user">@YOCRRZ224 · contribution history</div>
+                </div>
+                <div class="github-stats"><span><strong id="github-total">—</strong> contributions</span><span><strong id="github-streak">—</strong> current streak</span></div>
+            </div>
+            <div class="contrib-scroll"><div id="contrib-grid" class="contrib-grid" role="img" aria-label="GitHub contribution calendar"></div></div>
+            <div class="contrib-legend"><span>Less</span><i class="contrib-cell" data-level="0"></i><i class="contrib-cell" data-level="1"></i><i class="contrib-cell" data-level="2"></i><i class="contrib-cell" data-level="3"></i><i class="contrib-cell" data-level="4"></i><span>More</span></div>
+            <div class="github-foot"><span id="github-status">Loading public contribution data…</span><a class="text-link" id="github-profile" href="https://github.com/YOCRRZ224" target="_blank" rel="noreferrer">Open profile ↗</a></div>
+        </section>
+
+<!-- GitHub Radar -->
+<section class="bento github-radar" id="github-radar">
+  <div class="bento-header">
+    <div class="title">GitHub Radar</div>
+    <button class="small-action" id="gh-refresh" type="button">
+      Refresh
+    </button>
+  </div>
+
+  <div class="gh-tabs" role="tablist">
+    <button class="gh-tab active" data-tab="issues">Issues</button>
+    <button class="gh-tab" data-tab="prs">Pull requests</button>
+    <button class="gh-tab" data-tab="releases">Releases</button>
+    <button class="gh-tab" data-tab="repos">Repositories</button>
+  </div>
+
+  <div class="gh-summary">
+    <div><strong id="gh-issue-count">—</strong><span>Open issues</span></div>
+    <div><strong id="gh-pr-count">—</strong><span>Open PRs</span></div>
+    <div><strong id="gh-repo-count">—</strong><span>Public repos</span></div>
+  </div>
+
+  <div class="gh-status" id="gh-status" aria-live="polite">
+    Connecting to GitHub…
+  </div>
+
+  <div class="gh-list" id="gh-list"></div>
+
+  <div class="github-foot">
+    <span>Public GitHub data</span>
+    <a class="text-link"
+       href="https://github.com/YOCRRZ224"
+       target="_blank" rel="noopener noreferrer">
+      View profile ↗
+    </a>
+  </div>
+</section>
+
+<!-- Discover -->
+<section class="bento discover-card" id="discover-card">
+  <div class="bento-header">
+    <div class="title">Discover</div>
+    <button class="icon-btn" id="discover-refresh"
+      type="button" title="Refresh stories">↻</button>
+  </div>
+
+  <div class="discover-filters">
+    <button class="discover-filter active" data-source="top">Top</button>
+    <button class="discover-filter" data-source="new">Latest</button>
+    <button class="discover-filter" data-source="show">Show HN</button>
+  </div>
+
+  <div class="discover-status" id="discover-status" aria-live="polite">
+    Loading stories…
+  </div>
+  <div class="discover-list" id="discover-list"></div>
+
+  <div class="discover-footer">
+    <span>Hacker News · Public stories</span>
+    <a href="https://news.ycombinator.com/"
+      target="_blank" rel="noopener noreferrer">Open HN ↗</a>
+  </div>
+</section>
+
+
+        <!-- Quick Launch Web Apps -->
+        <div class="bento quick-launch">
+            <div class="bento-header">
+                <div class="title">
+                    <svg viewBox="0 0 24 24"><path d="M4 4h4v4H4z"></path><path d="M16 4h4v4h-4z"></path><path d="M10 4h4v4h-4z"></path><path d="M4 10h4v4H4z"></path><path d="M16 10h4v4h-4z"></path><path d="M10 10h4v4h-4z"></path><path d="M4 16h4v4H4z"></path><path d="M16 16h4v4h-4z"></path><path d="M10 16h4v4h-4z"></path></svg>
+                    Quick Launch
+                </div>
+                <button class="icon-btn" onclick="openModal('webapp')" title="Add Web App">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+            <div class="apps-grid" id="apps-list"></div>
+        </div>
+
     </div>
 
     <!-- Modals -->
-    <!-- Setup IP Modal -->
-    <div class="modal-overlay" id="modal-ip">
+    <div class="overlay" id="modal-overlay">
         <div class="modal">
-            <h2>Welcome to LAN Dashboard</h2>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.5;">Please enter the current local IP address of your server. This will be used to automatically generate links for your services.</p>
-            <form id="form-ip">
-                <div class="form-group">
-                    <label>Local IP Address</label>
-                    <input type="text" id="input-ip" class="form-control" placeholder="e.g. 192.168.1.100" required pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$|^[a-zA-Z0-9.-]+$">
-                </div>
+            <h3 id="modal-title">Add Item</h3>
+            <form id="modal-form">
+                <input type="text" id="modal-name" placeholder="Name (e.g. GitHub)" required>
+                <input type="url" id="modal-url" placeholder="URL (website or RSS/Atom feed)" required>
                 <div class="modal-actions">
-                    <button type="submit" class="btn btn-primary">Save IP & Continue</button>
+                    <button type="button" class="modal-btn" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="modal-btn primary">Save</button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Settings Modal -->
-    <div class="modal-overlay" id="modal-settings">
-        <div class="modal">
-            <h2>Settings</h2>
-            <form id="form-settings">
-                <div class="form-group">
-                    <label>Server IP Address</label>
-                    <input type="text" id="settings-ip" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Theme</label>
-                    <select id="settings-theme" class="form-control">
-                        <option value="glass">Glass (Default)</option>
-                        <option value="dark">Dark</option>
-                        <option value="light">Light</option>
-                        <option value="nord">Nord</option>
-                        <option value="tokyo-night">Tokyo Night</option>
-                        <option value="catppuccin">Catppuccin</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Background Image URL</label>
-                    <input type="text" id="settings-bg-url" class="form-control" placeholder="https://example.com/image.jpg">
-                </div>
-                <div class="form-group">
-                    <label>Or Upload Background Image</label>
-                    <input type="file" id="settings-bg-file" class="form-control" accept="image/*">
-                </div>
-                <div class="modal-actions" style="justify-content: space-between;">
-                    <div>
-                        <button type="button" class="btn btn-secondary" id="btn-export" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Export JSON</button>
-                        <label class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; cursor: pointer;">
-                            Import JSON
-                            <input type="file" id="btn-import" accept=".json" class="hidden">
-                        </label>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-secondary" onclick="closeModals()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Settings</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Add/Edit Bookmark Modal -->
-    <div class="modal-overlay" id="modal-bookmark">
-        <div class="modal">
-            <h2 id="bookmark-modal-title">Add Bookmark</h2>
-            <form id="form-bookmark">
-                <input type="hidden" id="bm-id">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" id="bm-name" class="form-control" required placeholder="e.g. Plex">
-                </div>
-                <div style="display: flex; gap: 1rem;">
-                    <div class="form-group" style="flex: 1;">
-                        <label>Port (optional)</label>
-                        <input type="number" id="bm-port" class="form-control" placeholder="e.g. 32400">
-                    </div>
-                    <div class="form-group" style="flex: 2;">
-                        <label>Path (optional)</label>
-                        <input type="text" id="bm-path" class="form-control" placeholder="e.g. /web">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Icon (Emoji/Text)</label>
-                    <input type="text" id="bm-icon" class="form-control" placeholder="🎬" required>
-                </div>
-                <div class="form-group">
-                    <label>Override URL (optional, ignores IP/Port)</label>
-                    <input type="text" id="bm-override" class="form-control" placeholder="https://external-service.com">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModals()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Bookmark</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Command Palette Modal -->
-    <div class="modal-overlay" id="cmd-palette">
-        <div class="modal">
-            <input type="text" id="cmd-input" class="form-control" placeholder="Search apps..." style="font-size: 1.2rem; padding: 1rem;">
-            <div class="cmd-list" id="cmd-list"></div>
         </div>
     </div>
 
     <script>
-        // State
-        const state = {
-            ip: '',
-            theme: 'glass',
-            customBg: '', // stores URL or base64
-            bookmarks: [],
-            stats: {}
+        // --- State Management ---
+        const store = {
+            get: (key, fallback) => { try { return JSON.parse(localStorage.getItem(`start_${key}`)) ?? fallback; } catch { return fallback; } },
+            set: (key, val) => { localStorage.setItem(`start_${key}`, JSON.stringify(val)); }
         };
 
-        const defaultBookmarks = [
-            { id: '1', name: 'Proxmox', port: 8006, path: '', icon: '🖥️', https: true },
-            { id: '2', name: 'TrueNAS', port: 80, path: '', icon: '💾' },
-            { id: '3', name: 'Pi-hole', port: 80, path: '/admin', icon: '🛡️' },
-            { id: '4', name: 'Plex', port: 32400, path: '/web', icon: '🍿' },
-            { id: '5', name: 'Home Assistant', port: 8123, path: '', icon: '🏠' },
-            { id: '6', name: 'Portainer', port: 9000, path: '', icon: '🐳' },
-        ];
+        let bookmarks = store.get('bookmarks', [
+            { id: 1, name: 'GitHub', url: 'https://github.com' },
+            { id: 2, name: 'Hacker News', url: 'https://news.ycombinator.com' },
+            { id: 3, name: 'MDN Web Docs', url: 'https://developer.mozilla.org' }
+        ]);
 
-        // DOM Elements
-        const elClock = document.getElementById('clock');
-        const elDate = document.getElementById('date');
-        const elGreeting = document.getElementById('greeting');
-        const elGrid = document.getElementById('bookmarks-grid');
-        const elSearch = document.getElementById('search-input');
-        const elBgLayer = document.getElementById('bg-layer');
+        let feeds = store.get('feeds', [
+            { id: 1, name: 'TechCrunch', url: 'https://techcrunch.com/feed/' },
+            { id: 2, name: 'Wired', url: 'https://www.wired.com/feed/rss' },
+            { id: 3, name: 'The Verge', url: 'https://www.theverge.com/rss/index.xml' }
+        ]);
         
-        // Load State
-        function loadState() {
-            const saved = localStorage.getItem('lan-dash-data');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                state.ip = parsed.ip || '';
-                state.theme = parsed.theme || 'glass';
-                state.customBg = parsed.customBg || '';
-                state.bookmarks = parsed.bookmarks && parsed.bookmarks.length > 0 ? parsed.bookmarks : defaultBookmarks;
-                state.stats = parsed.stats || {};
-            } else {
-                state.bookmarks = defaultBookmarks;
-            }
-            applyTheme();
-        }
+        let webApps = store.get('webapps', [
+            { id: 1, name: 'Sheets', url: 'https://docs.google.com/spreadsheets' },
+            { id: 2, name: 'Gmail', url: 'https://mail.google.com' },
+            { id: 3, name: 'Vercel', url: 'https://vercel.com' },
+            { id: 4, name: 'Figma', url: 'https://figma.com' },
+            { id: 5, name: 'GitHub', url: 'https://github.com' },
+            { id: 6, name: 'Railway', url: 'https://railway.app' }
+        ]);
+        
+        let currentModalType = null;
 
-        function saveState() {
-            try {
-                localStorage.setItem('lan-dash-data', JSON.stringify(state));
-            } catch (e) {
-                if (e.name === 'QuotaExceededError') {
-                    alert('Error: Background image is too large for local storage. Try using a URL instead.');
-                }
-            }
-        }
-
-        // Clock & Greeting
+        // --- Clock & Date ---
         function updateClock() {
-            const now = new Date();
-            elClock.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            const options = { weekday: 'long', month: 'long', day: 'numeric' };
-            elDate.textContent = now.toLocaleDateString(undefined, options);
-
-            const hour = now.getHours();
-            if (hour < 12) elGreeting.textContent = "Good Morning";
-            else if (hour < 18) elGreeting.textContent = "Good Afternoon";
-            else elGreeting.textContent = "Good Evening";
+            const d = new Date();
+            const h = String(d.getHours()).padStart(2, '0');
+            const m = String(d.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${h}:${m}`;
+            document.getElementById('date').textContent = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Theme & Background
-        function applyTheme() {
-            document.body.setAttribute('data-theme', state.theme);
-            if (state.customBg) {
-                elBgLayer.style.backgroundImage = `url('${state.customBg}')`;
-            } else {
-                elBgLayer.style.backgroundImage = 'none';
-            }
-        }
-
-        // URL Generation
-        function generateUrl(bm) {
-            if (bm.override) return bm.override;
-            if (!state.ip) return '#';
-            const protocol = bm.https ? 'https://' : 'http://';
-            const portStr = bm.port ? `:${bm.port}` : '';
-            const pathStr = bm.path ? (bm.path.startsWith('/') ? bm.path : `/${bm.path}`) : '';
-            return `${protocol}${state.ip}${portStr}${pathStr}`;
-        }
-
-        // Render Bookmarks
-        function renderBookmarks(searchQuery = '') {
-            elGrid.innerHTML = '';
-            
-            let filtered = state.bookmarks;
-            
-            if (searchQuery) {
-                const q = searchQuery.toLowerCase();
-                filtered = filtered.filter(b => b.name.toLowerCase().includes(q));
-            }
-
-            // Sort by clicks
-            filtered.sort((a, b) => {
-                const clicksA = state.stats[a.id]?.clicks || 0;
-                const clicksB = state.stats[b.id]?.clicks || 0;
-                return clicksB - clicksA;
-            });
-
-            filtered.forEach(bm => {
-                const url = generateUrl(bm);
-                const displayUrl = bm.override ? bm.override : `${state.ip}${bm.port ? ':'+bm.port : ''}${bm.path}`;
-                
-                const card = document.createElement('a');
-                card.className = 'bookmark-card';
-                card.href = url;
-                card.target = '_blank';
-                card.onclick = (e) => handleBookmarkClick(e, bm.id);
-                
-                const stat = state.stats[bm.id];
-                const lastOpened = stat && stat.lastOpened ? new Date(stat.lastOpened).toLocaleDateString() : 'Never';
-
-                card.innerHTML = `
-                    <div class="card-status" id="status-${bm.id}"></div>
-                    <div class="card-header">
-                        <div class="card-icon">${bm.icon}</div>
-                        <div class="card-info">
-                            <div class="card-title">${bm.name}</div>
-                            <div class="card-url" title="${url}">${displayUrl}</div>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <span class="card-stats">Clicks: ${stat ? stat.clicks : 0} • Last: ${lastOpened}</span>
-                        <div class="card-controls" onclick="event.preventDefault(); event.stopPropagation();">
-                            <button class="card-control-btn" onclick="editBookmark('${bm.id}')" title="Edit">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                            </button>
-                            <button class="card-control-btn" onclick="deleteBookmark('${bm.id}')" title="Delete">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                elGrid.appendChild(card);
-                
-                if (!bm.override && state.ip) {
-                    checkStatus(bm, `status-${bm.id}`);
-                }
-            });
-        }
-
-        function checkStatus(bm, elementId) {
-            const img = new Image();
-            const proto = bm.https ? 'https' : 'http';
-            const port = bm.port ? `:${bm.port}` : '';
-            img.src = `${proto}://${state.ip}${port}/favicon.ico?_=${new Date().getTime()}`;
-            img.onload = () => {
-                const el = document.getElementById(elementId);
-                if(el) el.classList.add('status-online');
-            };
-        }
-
-        function handleBookmarkClick(e, id) {
-            if (!state.stats[id]) {
-                state.stats[id] = { clicks: 0, lastOpened: null };
-            }
-            state.stats[id].clicks++;
-            state.stats[id].lastOpened = Date.now();
-            saveState();
-            setTimeout(() => renderBookmarks(elSearch.value), 100);
-        }
-
-        // Search & Google search
-        elSearch.addEventListener('input', (e) => {
-            renderBookmarks(e.target.value);
-        });
-
-        elSearch.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const query = e.target.value.trim();
-                if (query) {
-                    window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
-                }
-            }
-        });
-
-        // Modals
-        function openModal(id) {
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        function closeModals() {
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-        }
-
-        // Setup IP
-        document.getElementById('form-ip').addEventListener('submit', (e) => {
+        // --- Advanced Search (Bang Commands) ---
+        document.getElementById('search-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            state.ip = document.getElementById('input-ip').value.trim();
-            saveState();
-            closeModals();
-            renderBookmarks();
+            const val = document.getElementById('search-input').value.trim();
+            if (!val) return;
+
+            let targetUrl = '';
+            if (val.startsWith('!ai ')) targetUrl = `https://chatgpt.com/?q=${encodeURIComponent(val.slice(4))}`;
+            else if (val.startsWith('!g ')) targetUrl = `https://www.google.com/search?q=${encodeURIComponent(val.slice(3))}`;
+            else if (val.startsWith('!yt ')) targetUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(val.slice(4))}`;
+            else if (val.startsWith('!gh ')) targetUrl = `https://github.com/search?q=${encodeURIComponent(val.slice(4))}`;
+            else targetUrl = `https://www.google.com/search?q=${encodeURIComponent(val)}`; 
+
+            window.location.href = targetUrl;
         });
 
-        // Settings
-        document.getElementById('btn-settings').addEventListener('click', () => {
-            document.getElementById('settings-ip').value = state.ip;
-            document.getElementById('settings-theme').value = state.theme;
-            document.getElementById('settings-bg-url').value = state.customBg.startsWith('data:') ? '' : state.customBg;
-            document.getElementById('settings-bg-file').value = '';
-            openModal('modal-settings');
-        });
-
-        document.getElementById('settings-bg-file').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    document.getElementById('settings-bg-url').value = ''; // clear URL input if file is selected
-                    state.customBg = ev.target.result; 
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        document.getElementById('form-settings').addEventListener('submit', (e) => {
-            e.preventDefault();
-            state.ip = document.getElementById('settings-ip').value.trim();
-            state.theme = document.getElementById('settings-theme').value;
-            
-            const urlInput = document.getElementById('settings-bg-url').value.trim();
-            if (urlInput) {
-                state.customBg = urlInput;
-            }
-            
-            saveState();
-            applyTheme();
-            renderBookmarks();
-            closeModals();
-        });
-
-        // Add / Edit Bookmark
-        document.getElementById('btn-add').addEventListener('click', () => {
-            document.getElementById('form-bookmark').reset();
-            document.getElementById('bm-id').value = '';
-            document.getElementById('bookmark-modal-title').textContent = 'Add Bookmark';
-            openModal('modal-bookmark');
-        });
-
-        window.editBookmark = function(id) {
-            const bm = state.bookmarks.find(b => b.id === id);
-            if (!bm) return;
-            
-            document.getElementById('bm-id').value = bm.id;
-            document.getElementById('bm-name').value = bm.name;
-            document.getElementById('bm-port').value = bm.port || '';
-            document.getElementById('bm-path').value = bm.path || '';
-            document.getElementById('bm-icon').value = bm.icon || '';
-            document.getElementById('bm-override').value = bm.override || '';
-            
-            document.getElementById('bookmark-modal-title').textContent = 'Edit Bookmark';
-            openModal('modal-bookmark');
-        };
-
-        window.deleteBookmark = function(id) {
-            if(confirm('Are you sure you want to delete this bookmark?')) {
-                state.bookmarks = state.bookmarks.filter(b => b.id !== id);
-                delete state.stats[id];
-                saveState();
-                renderBookmarks(elSearch.value);
-            }
-        };
-
-        document.getElementById('form-bookmark').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const id = document.getElementById('bm-id').value || Date.now().toString();
-            const bm = {
-                id,
-                name: document.getElementById('bm-name').value.trim(),
-                port: document.getElementById('bm-port').value,
-                path: document.getElementById('bm-path').value.trim(),
-                icon: document.getElementById('bm-icon').value.trim(),
-                override: document.getElementById('bm-override').value.trim()
-            };
-
-            const existingIndex = state.bookmarks.findIndex(b => b.id === id);
-            if (existingIndex >= 0) {
-                state.bookmarks[existingIndex] = bm;
-            } else {
-                state.bookmarks.push(bm);
-            }
-
-            saveState();
-            renderBookmarks(elSearch.value);
-            closeModals();
-        });
-
-        // Import / Export
-        document.getElementById('btn-export').addEventListener('click', () => {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-            const dlAnchorElem = document.createElement('a');
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "lan-dash-backup.json");
-            dlAnchorElem.click();
-        });
-
-        document.getElementById('btn-import').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const imported = JSON.parse(e.target.result);
-                    if(imported && Array.isArray(imported.bookmarks)) {
-                        Object.assign(state, imported);
-                        saveState();
-                        applyTheme();
-                        renderBookmarks(elSearch.value);
-                        closeModals();
-                        alert('Settings imported successfully!');
-                    } else {
-                        alert('Invalid backup file format.');
-                    }
-                } catch(err) {
-                    alert('Error parsing JSON file.');
-                }
-            };
-            reader.readAsText(file);
-        });
-
-        // Command Palette (Ctrl+K)
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                openCommandPalette();
-            }
-            if (e.key === 'Escape') {
-                closeModals();
-            }
-        });
-
-        function openCommandPalette() {
-            openModal('cmd-palette');
-            const input = document.getElementById('cmd-input');
-            input.value = '';
-            input.focus();
-            renderCommandList('');
+        // --- Rendering Lists ---
+        function getDomain(url) {
+            try { return new URL(url).hostname.replace('www.', ''); } catch { return url; }
         }
 
-        document.getElementById('cmd-input').addEventListener('input', (e) => {
-            renderCommandList(e.target.value);
-        });
-
-        function renderCommandList(query) {
-            const list = document.getElementById('cmd-list');
+        function renderBookmarks() {
+            const list = document.getElementById('bookmark-list');
             list.innerHTML = '';
-            
-            let filtered = state.bookmarks;
-            if (query) {
-                const q = query.toLowerCase();
-                filtered = filtered.filter(b => b.name.toLowerCase().includes(q));
-            }
-
-            filtered.slice(0, 10).forEach((bm, idx) => {
-                const div = document.createElement('div');
-                div.className = `cmd-item ${idx === 0 ? 'selected' : ''}`;
-                div.innerHTML = `
-                    <div class="card-icon" style="width: 32px; height: 32px; font-size: 1rem;">${bm.icon}</div>
-                    <div style="flex:1;">
-                        <div style="font-weight: 500;">${bm.name}</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);">${generateUrl(bm)}</div>
+            bookmarks.forEach(b => {
+                const el = document.createElement('a');
+                el.className = 'list-item';
+                el.href = b.url;
+                el.innerHTML = `
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                     </div>
-                    <span style="font-size:0.8rem; color:var(--text-muted);">Enter to open</span>
+                    <div class="list-item-content">
+                        <span class="list-item-title">${b.name}</span>
+                        <span class="list-item-desc">${getDomain(b.url)}</span>
+                    </div>
+                    <button class="delete-btn" onclick="event.preventDefault(); removeBookmark(${b.id})" title="Remove">
+                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
                 `;
-                
-                div.onclick = () => {
-                    handleBookmarkClick(null, bm.id);
-                    window.open(generateUrl(bm), '_blank');
-                    closeModals();
-                };
-                
-                list.appendChild(div);
+                list.appendChild(el);
             });
         }
 
-        document.getElementById('cmd-input').addEventListener('keydown', (e) => {
-            const list = document.getElementById('cmd-list');
-            const items = list.querySelectorAll('.cmd-item');
-            if (items.length === 0) return;
-
-            let selected = Array.from(items).findIndex(item => item.classList.contains('selected'));
-
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                if (selected >= 0) items[selected].classList.remove('selected');
-                selected = (selected + 1) % items.length;
-                items[selected].classList.add('selected');
-                items[selected].scrollIntoView({ block: 'nearest' });
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                if (selected >= 0) items[selected].classList.remove('selected');
-                selected = (selected - 1 + items.length) % items.length;
-                items[selected].classList.add('selected');
-                items[selected].scrollIntoView({ block: 'nearest' });
-            } else if (e.key === 'Enter') {
-                e.preventDefault();
-                if (selected >= 0) {
-                    items[selected].click();
+        async function renderFeeds() {
+            const list = document.getElementById('rss-list');
+            list.innerHTML = '';
+            for (const f of feeds) {
+                const wrap = document.createElement('div'); wrap.className = 'feed-block';
+                const head = document.createElement('div'); head.className = 'list-item';
+                head.innerHTML = `<div class="icon" style="color:var(--accent)"><svg viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></div><div class="list-item-content"><span class="list-item-title"></span><span class="list-item-desc">Fetching live feed…</span></div><button class="delete-btn" title="Remove feed"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>`;
+                head.querySelector('.list-item-title').textContent = f.name;
+                head.querySelector('.delete-btn').addEventListener('click', () => removeFeed(f.id));
+                const articles = document.createElement('div'); articles.className = 'feed-articles';
+                wrap.append(head, articles); list.appendChild(wrap);
+                try {
+                    // Browser-side public RSS-to-JSON service; no local backend required.
+                    const endpoint = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(f.url)}`;
+                    const response = await fetch(endpoint, {cache:'no-store'});
+                    if (!response.ok) throw new Error('RSS service unavailable');
+                    const data = await response.json();
+                    if (data.status !== 'ok') throw new Error(data.message || 'Feed unavailable');
+                    const items = Array.isArray(data.items) ? data.items : [];
+                    head.querySelector('.list-item-desc').textContent = items.length ? `${items.length} live stories` : 'No recent stories';
+                    items.slice(0, 3).forEach(item => {
+                        const a = document.createElement('a'); a.className='feed-article'; a.href=item.link || f.url; a.target='_blank'; a.rel='noopener noreferrer';
+                        a.textContent = item.title || 'Untitled article';
+                        if (item.pubDate) a.title = new Date(item.pubDate).toLocaleString();
+                        articles.appendChild(a);
+                    });
+                    if (!items.length) articles.textContent = 'No items returned by this feed.';
+                } catch (err) {
+                    head.querySelector('.list-item-desc').textContent = 'Feed unavailable';
+                    const note = document.createElement('div'); note.className='feed-article';
+                    note.textContent = 'Could not fetch via the public feed service. The source may be unsupported or temporarily rate-limited. ';
+                    const a = document.createElement('a'); a.href=f.url; a.target='_blank'; a.rel='noopener noreferrer'; a.textContent='Open feed'; a.style.color='var(--accent)';
+                    note.appendChild(a); articles.appendChild(note);
                 }
             }
-        });
-
-        // Click outside to close modals
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    closeModals();
-                }
-            });
-        });
-
-        // Initialize
-        loadState();
-        if (!state.ip) {
-            openModal('modal-ip');
-        } else {
-            renderBookmarks();
         }
+
+        function renderWebApps() {
+            const list = document.getElementById('apps-list');
+            list.innerHTML = '';
+            webApps.forEach(app => {
+                const domain = getDomain(app.url);
+                const logoUrl = `https://s2.googleusercontent.com/s2/favicons?domain=${domain}&sz=128`;
+                
+                const el = document.createElement('a');
+                el.className = 'app-item';
+                el.href = app.url;
+                el.innerHTML = `
+                    <img src="${logoUrl}" alt="${app.name} logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjODY4NjhCIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiPjwvY2lyY2xlPjxsaW5lIHgxPSIxMiIgeTE9IjgiIHgyPSIxMiIgeTI9IjEyIj48L2xpbmU+PGxpbmUgeDE9IjEyIiB5MT0iMTYiIHgyPSIxMi4wMSIgeTI9IjE2Ij48L2xpbmU+PC9zdmc+'">
+                    <span>${app.name}</span>
+                    <button class="delete-btn" onclick="event.preventDefault(); removeWebApp(${app.id})" title="Remove">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        // --- Add/Remove Logic ---
+        function removeBookmark(id) { bookmarks = bookmarks.filter(b => b.id !== id); store.set('bookmarks', bookmarks); renderBookmarks(); }
+        function removeFeed(id) { feeds = feeds.filter(f => f.id !== id); store.set('feeds', feeds); renderFeeds(); }
+        function removeWebApp(id) { webApps = webApps.filter(app => app.id !== id); store.set('webapps', webApps); renderWebApps(); }
+
+        // --- Modals ---
+        function openModal(type) {
+            currentModalType = type;
+            const titles = { bookmark: 'Add Bookmark', rss: 'Add RSS Feed', webapp: 'Add Web App' };
+            document.getElementById('modal-title').textContent = titles[type];
+            document.getElementById('modal-name').value = '';
+            document.getElementById('modal-url').value = '';
+            document.getElementById('modal-overlay').classList.add('active');
+            document.getElementById('modal-name').focus();
+        }
+        function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+
+        document.getElementById('modal-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('modal-name').value.trim();
+            const url = document.getElementById('modal-url').value.trim();
+            const id = Date.now();
+            
+            if (currentModalType === 'bookmark') {
+                bookmarks.push({ id, name, url });
+                store.set('bookmarks', bookmarks);
+                renderBookmarks();
+            } else if (currentModalType === 'rss') {
+                feeds.push({ id, name, url });
+                store.set('feeds', feeds);
+                renderFeeds();
+            } else if (currentModalType === 'webapp') {
+                webApps.push({ id, name, url });
+                store.set('webapps', webApps);
+                renderWebApps();
+            }
+            closeModal();
+        });
+
+       
+
+        // --- Quick Calculator ---
+        const calcInput = document.getElementById('calc-input');
+        const calcResult = document.getElementById('calc-result');
+        calcInput.addEventListener('input', () => {
+            const exp = calcInput.value.trim();
+            if (!exp) { calcResult.textContent = '= 0'; return; }
+            if (/^[\d\s.+\-*/()%]+$/.test(exp)) {
+                try {
+                    const result = Function('"use strict";return (' + exp + ')')();
+                    calcResult.textContent = `= ${Number.isInteger(result) ? result : result.toFixed(2)}`;
+                } catch { calcResult.textContent = '= ...'; }
+            } else { calcResult.textContent = 'Invalid expression'; }
+        });
+
+        // --- GitHub contribution calendar: HTML elements, no SVG ---
+        const GITHUB_USER = 'YOCRRZ224';
+        async function loadContributions() {
+            const grid = document.getElementById('contrib-grid');
+            const status = document.getElementById('github-status');
+            document.getElementById('github-user').textContent = `@${GITHUB_USER} · contribution history`;
+            document.getElementById('github-profile').href = `https://github.com/${GITHUB_USER}`;
+            try {
+                // Public third-party endpoint with browser CORS support; no token/backend.
+                const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(GITHUB_USER)}?y=last`, {cache:'no-store'});
+                if (!res.ok) throw new Error('Contribution service unavailable');
+                const data = await res.json();
+                const days = Array.isArray(data.contributions) ? data.contributions : [];
+                if (!days.length) throw new Error('No contribution days returned');
+                grid.innerHTML = '';
+                const firstDay = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
+                for (let pad = 0; pad < firstDay; pad++) { const blank = document.createElement('span'); blank.className='contrib-cell'; blank.style.visibility='hidden'; blank.setAttribute('aria-hidden','true'); grid.appendChild(blank); }
+                days.forEach(day => {
+                    const cell = document.createElement('span'); cell.className='contrib-cell';
+                    cell.dataset.level = String(Math.max(0, Math.min(4, Number(day.level) || 0)));
+                    cell.title = `${day.date}: ${day.count} contribution${day.count === 1 ? '' : 's'}`;
+                    cell.setAttribute('aria-label', cell.title); grid.appendChild(cell);
+                });
+                const total = days.reduce((sum, day) => sum + (Number(day.count) || 0), 0);
+                let streak = 0;
+                for (let i = days.length - 1; i >= 0; i--) {
+                    if ((Number(days[i].count) || 0) > 0) streak++;
+                    else if (i !== days.length - 1 || new Date(days[i].date + 'T00:00:00').toDateString() !== new Date().toDateString()) break;
+                }
+                document.getElementById('github-total').textContent = total.toLocaleString();
+                document.getElementById('github-streak').textContent = `${streak}d`;
+                status.textContent = `Live public data · updated ${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+            } catch (err) {
+                status.textContent = 'Contribution API unavailable — open profile to check activity';
+                grid.innerHTML = '';
+                for (let i=0;i<364;i++) { const c=document.createElement('span'); c.className='contrib-cell'; c.dataset.level='0'; c.title='Live contribution data unavailable'; grid.appendChild(c); }
+            }
+        }
+
+        // --- Browser-only connectivity monitor (not system-wide bandwidth) ---
+        const latencyHistory = Array(36).fill(0);
+        let probeSamples = [];
+        const probeTargets = [
+            {name:'Cloudflare', url:'https://www.cloudflare.com/cdn-cgi/trace'},
+            {name:'GitHub', url:'https://github.com/favicon.ico'},
+            {name:'Google', url:'https://www.google.com/generate_204'}
+        ];
+        function formatMs(ms) { return Number.isFinite(ms) ? `${Math.round(ms)} ms` : '—'; }
+        function drawLatencyBars(ms) {
+            latencyHistory.push(Number.isFinite(ms) ? ms : 0); latencyHistory.shift();
+            const valid = latencyHistory.filter(v => v > 0); const max = Math.max(...valid, 1);
+            const box = document.getElementById('network-bars'); box.innerHTML = '';
+            latencyHistory.forEach(v => { const bar=document.createElement('i'); bar.className='network-bar'; bar.style.height=`${v ? Math.max(3,Math.round((v/max)*32)) : 2}px`; bar.style.opacity=v ? '.85' : '.18'; bar.title=v ? formatMs(v) : 'No sample'; box.appendChild(bar); });
+        }
+        async function probe(target) {
+            const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 6500); const started = performance.now();
+            try {
+                // no-cors lets us time reachability without reading the remote response.
+                await fetch(`${target.url}${target.url.includes('?') ? '&' : '?'}_still=${Date.now()}`, {mode:'no-cors', cache:'no-store', signal:controller.signal});
+                return {name:target.name, ok:true, ms:performance.now()-started};
+            } catch (e) { return {name:target.name, ok:false, ms:null, error:e.name === 'AbortError' ? 'timeout' : 'unreachable'}; }
+            finally { clearTimeout(timer); }
+        }
+        async function refreshConnectivity(manual=false) {
+            const list=document.getElementById('connectivity-list');
+            if (manual) list.innerHTML='<div class="connectivity-row"><span>Running browser diagnostics…</span><span>please wait</span></div>';
+            const checks = await Promise.all(probeTargets.map(probe));
+            list.innerHTML='';
+            checks.forEach(c => {
+                const row=document.createElement('div'); row.className='connectivity-row';
+                const left=document.createElement('span'); left.className='probe-state';
+                const dot=document.createElement('i'); dot.className='probe-dot '+(c.ok?'good':'bad');
+                const name=document.createElement('span'); name.textContent=c.name; left.append(dot,name);
+                const right=document.createElement('span'); right.textContent=c.ok ? formatMs(c.ms) : c.error; row.append(left,right); list.appendChild(row);
+            });
+            const successful=checks.filter(c=>c.ok); const avg=successful.length ? successful.reduce((n,c)=>n+c.ms,0)/successful.length : NaN;
+            const latest=successful.length ? Math.min(...successful.map(c=>c.ms)) : NaN;
+            document.getElementById('net-down').textContent=formatMs(latest);
+            document.getElementById('net-up').textContent=formatMs(avg);
+            document.getElementById('net-rx-total').textContent=`${successful.length} / ${checks.length}`;
+            document.getElementById('net-tx-total').textContent=navigator.onLine ? (successful.length ? 'Online' : 'Limited') : 'Offline';
+            document.getElementById('net-total').textContent=successful.length ? `Best response ${formatMs(latest)}` : 'No endpoints reachable';
+            document.getElementById('net-interface').textContent='Browser timing · not bandwidth';
+            document.getElementById('ping-indicator').className='probe-dot '+(successful.length?'good':'bad');
+            drawLatencyBars(avg);
+        }
+        window.addEventListener('online',()=>refreshConnectivity());
+        window.addEventListener('offline',()=>{document.getElementById('ping-indicator').className='probe-dot bad'; document.getElementById('net-tx-total').textContent='Offline';});
+        refreshConnectivity(); loadContributions();
+        setInterval(refreshConnectivity, 30000);
+        setInterval(loadContributions, 15*60*1000);
+
+        // Initial Renders
+        renderBookmarks();
+        renderFeeds();
+        renderWebApps();
+
+const GH_USER = "YOCRRZ224";
+const GH_API = "https://api.github.com";
+
+const ghCache = new Map();
+const GH_CACHE_MS = 60_000;
+
+let ghCurrentTab = "issues";
+let ghRepos = [];
+
+async function ghFetch(path, force = false) {
+  const url = GH_API + path;
+  const cached = ghCache.get(url);
+
+  if (!force && cached && Date.now() - cached.time < GH_CACHE_MS) {
+    return cached.data;
+  }
+
+  const response = await fetch(url, {
+    headers: { Accept: "application/vnd.github+json" }
+  });
+
+  if (!response.ok) {
+    if (response.status === 403 || response.status === 429) {
+      throw new Error("GitHub API rate limit reached. Try again later.");
+    }
+    throw new Error(`GitHub API returned ${response.status}`);
+  }
+
+  const data = await response.json();
+  ghCache.set(url, { time: Date.now(), data });
+  return data;
+}
+
+function ghElement(tag, className, text) {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined) el.textContent = text;
+  return el;
+}
+
+function ghRender(items, type) {
+  const list = document.getElementById("gh-list");
+  list.replaceChildren();
+
+  if (!items.length) {
+    list.append(ghElement("div", "gh-status", "Nothing to show here."));
+    return;
+  }
+
+  for (const item of items) {
+    const link = document.createElement("a");
+    link.className = "gh-item";
+    link.href = item.html_url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    const title = ghElement("div", "gh-item-title", item.title || item.name);
+    const repo = item.repository_url
+      ? item.repository_url.split("/").slice(-2).join("/")
+      : item.full_name || "";
+
+    const date = item.updated_at || item.published_at;
+    const metaText = [
+      repo,
+      date ? new Date(date).toLocaleDateString() : "",
+      type === "issues" ? `#${item.number}` : "",
+      type === "prs" ? `#${item.number}` : "",
+      type === "releases" ? (item.tag_name || "") : "",
+      type === "repos" ? `${item.stargazers_count || 0} stars` : ""
+    ].filter(Boolean).join(" · ");
+
+    link.append(title, ghElement("div", "gh-item-meta", metaText));
+
+    if (item.labels) {
+      for (const label of item.labels.slice(0, 3)) {
+        link.append(ghElement("span", "gh-label", label.name));
+      }
+    }
+
+    document.getElementById("gh-list").append(link);
+  }
+}
+
+async function ghLoad(tab = ghCurrentTab, force = false) {
+  ghCurrentTab = tab;
+
+  const status = document.getElementById("gh-status");
+  status.textContent = "Fetching GitHub data…";
+
+  document.querySelectorAll(".gh-tab").forEach(button => {
+    const active = button.dataset.tab === tab;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
+
+  try {
+    let data = [];
+
+    if (tab === "issues" || tab === "prs") {
+      const kind = tab === "issues" ? "issue" : "pr";
+      const result = await ghFetch(
+        `/search/issues?q=author:${GH_USER}+is:open+type:${kind}&sort=updated&order=desc&per_page=10`,
+        force
+      );
+      data = result.items || [];
+    }
+
+    if (tab === "releases") {
+      // Only fetch releases from the six most recently updated public repos.
+      if (force) ghCache.delete(GH_API + `/users/${GH_USER}/repos?sort=updated&per_page=30`);
+
+      if (!ghRepos.length || force) {
+        ghRepos = await ghFetch(
+          `/users/${GH_USER}/repos?sort=updated&per_page=30`,
+          force
+        );
+      }
+
+      const selected = ghRepos.slice(0, 6);
+      const results = await Promise.allSettled(
+        selected.map(repo =>
+          ghFetch(`/repos/${GH_USER}/${repo.name}/releases?per_page=1`, force)
+        )
+      );
+
+      data = results.flatMap(result =>
+        result.status === "fulfilled" ? result.value : []
+      ).filter(release => !release.draft)
+        .sort((a, b) => new Date(b.published_at || 0) -
+                        new Date(a.published_at || 0));
+    }
+
+    if (tab === "repos") {
+      ghRepos = await ghFetch(
+        `/users/${GH_USER}/repos?sort=updated&per_page=10`,
+        force
+      );
+      data = ghRepos;
+    }
+
+    ghRender(data, tab);
+    status.textContent = `Showing ${data.length} ${tab === "prs" ? "pull requests" : tab}.`;
+  } catch (error) {
+    status.textContent = error.message;
+  }
+}
+
+async function ghLoadSummary() {
+  try {
+    const [issues, prs, repos] = await Promise.all([
+      ghFetch(`/search/issues?q=author:${GH_USER}+is:open+type:issue&per_page=1`),
+      ghFetch(`/search/issues?q=author:${GH_USER}+is:open+type:pr&per_page=1`),
+      ghFetch(`/users/${GH_USER}/repos?per_page=100`)
+    ]);
+
+    document.getElementById("gh-issue-count").textContent =
+      issues.total_count.toLocaleString();
+    document.getElementById("gh-pr-count").textContent =
+      prs.total_count.toLocaleString();
+    document.getElementById("gh-repo-count").textContent =
+      repos.length.toLocaleString();
+
+    ghRepos = repos;
+  } catch (error) {
+    document.getElementById("gh-status").textContent = error.message;
+  }
+}
+
+document.querySelectorAll(".gh-tab").forEach(button => {
+  button.addEventListener("click", () => ghLoad(button.dataset.tab));
+});
+
+document.getElementById("gh-refresh").addEventListener("click", async () => {
+  ghCache.clear();
+  ghRepos = [];
+  await ghLoadSummary();
+  await ghLoad(ghCurrentTab, true);
+});
+
+ghLoadSummary();
+ghLoad("issues");
+
+
+
+/* Discover — live Hacker News stories */
+const hnBase = "https://hacker-news.firebaseio.com/v0";
+let discoverSource = "top";
+let discoverRequest = 0;
+
+const discoverCache = new Map();
+
+async function discoverJSON(url) {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Request failed (${response.status})`);
+  }
+
+  return response.json();
+}
+
+async function discoverLoad(source = discoverSource) {
+  discoverSource = source;
+  const requestId = ++discoverRequest;
+  const list = document.getElementById("discover-list");
+  const status = document.getElementById("discover-status");
+
+  document.querySelectorAll(".discover-filter").forEach(button => {
+    button.classList.toggle("active", button.dataset.source === source);
+  });
+
+  status.textContent = "Fetching stories…";
+  list.replaceChildren();
+
+  try {
+    const endpoint = {
+      top: "topstories",
+      new: "newstories",
+      show: "showstories"
+    }[source] || "topstories";
+
+    let ids = discoverCache.get(endpoint);
+
+    // Reuse IDs briefly to reduce repeated API calls.
+    if (!ids || source === "new") {
+      ids = await discoverJSON(`${hnBase}/${endpoint}.json`);
+      discoverCache.set(endpoint, ids);
+    }
+
+    const stories = await Promise.all(
+      ids.slice(0, 12).map(async id => {
+        const cached = discoverCache.get(`story-${id}`);
+        if (cached) return cached;
+
+        const story = await discoverJSON(`${hnBase}/item/${id}.json`);
+        discoverCache.set(`story-${id}`, story);
+        return story;
+      })
+    );
+
+    if (requestId !== discoverRequest) return;
+
+    const validStories = stories
+      .filter(story => story && !story.deleted && !story.dead && story.title)
+      .sort((a, b) => (b.score || 0) - (a.score || 0));
+
+    validStories.forEach(story => {
+      const link = document.createElement("a");
+      link.className = "discover-item";
+      link.href = story.url ||
+        `https://news.ycombinator.com/item?id=${story.id}`;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+
+      const title = document.createElement("strong");
+      title.textContent = story.title;
+
+      const meta = document.createElement("span");
+      const age = new Date(story.time * 1000).toLocaleDateString();
+      meta.textContent =
+        `${story.score || 0} points · ${story.descendants || 0} comments · ${age}`;
+
+      link.append(title, meta);
+      list.append(link);
+    });
+
+    status.textContent = validStories.length
+      ? `${validStories.length} stories · Updated just now`
+      : "No stories available right now.";
+  } catch (error) {
+    if (requestId !== discoverRequest) return;
+    status.textContent = "Couldn't load stories. Check your connection and retry.";
+  }
+}
+
+document.querySelectorAll(".discover-filter").forEach(button => {
+  button.addEventListener("click", () => {
+    discoverLoad(button.dataset.source);
+  });
+});
+
+document.getElementById("discover-refresh").addEventListener("click", () => {
+  discoverCache.clear();
+  discoverLoad(discoverSource);
+});
+
+discoverLoad("top");
+
     </script>
 </body>
 </html>
